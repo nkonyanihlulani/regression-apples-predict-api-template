@@ -62,7 +62,24 @@ def _preprocess_data(data):
     
 
     feature_vector_df = feature_vector_df[(feature_vector_df['Commodities'] == 'APPLE GOLDEN DELICIOUS')]
-    predict_vector = feature_vector_df[['Total_Qty_Sold','Stock_On_Hand']]
+    
+    predict_vector = feature_vector_df['Province','Container','Size_Grade','Weight_Kg','Date','Low_Price','High_Price',\
+                                       'Sales_Total','Total_Qty_Sold','Total_Kg_Sold','Stock_On_Hand']
+    
+    
+    predict_vector['Date'] = pd.to_datetime(predict_vector['Date']) 
+    
+    #Getting features from date
+    predict_vector['Year'] = predict_vector['Date'].dt.year
+    predict_vector['Month'] = predict_vector['Date'].dt.month_name()
+    predict_vector['Day_of_Month'] = predict_vector['Date'].dt.day
+    predict_vector['Day_of_Week'] = predict_vector['Date'].dt.day_name()
+    predict_vector.drop(['Date'],axis = 1, inplace = True)
+                                       
+    predict_vector = pd.get_dummies(predict_vector,drop_first=True)
+    predict_vector.columns = [col.replace(" ","_") for col in predict_vector.columns]
+                     
+    
                                 
     # ------------------------------------------------------------------------
 
