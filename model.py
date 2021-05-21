@@ -65,7 +65,7 @@ def _preprocess_data(data):
     feature_vector_df = feature_vector_df[(feature_vector_df['Commodities'] == 'APPLE GOLDEN DELICIOUS')]
     
     predict_vector = feature_vector_df[['Weight_Kg','Low_Price','High_Price','Sales_Total','Total_Qty_Sold','Total_Kg_Sold','Stock_On_Hand']]
-    Sc_X = StandardScalar()
+    Sc_X = StandardScaler()
     predict_vector = Sc_X.fit_transform(predict_vector)
                                 
     # ------------------------------------------------------------------------
